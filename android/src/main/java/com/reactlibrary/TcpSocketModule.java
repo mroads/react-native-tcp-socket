@@ -27,7 +27,7 @@ public class TcpSocketModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void sampleMethod(String host, int port, String byteStr, Callback callback) {
+    public void sendDataToSocket(String host, int port, String byteStr, Callback callback) {
         byte[] byteArr = android.util.Base64.decode(byteStr, Base64.DEFAULT);
         try{
             Runnable runnable = () -> {
