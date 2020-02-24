@@ -14,6 +14,8 @@ public class TcpSocketModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
 
+    private final String TAG = getName();
+
     private static final String SUCCESS = "success";
 
     public TcpSocketModule(ReactApplicationContext reactContext) {
@@ -27,11 +29,10 @@ public class TcpSocketModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void sampleMethod(String host, int port, String byteStr, Callback callback) {
-        byte[] byteArr = android.util.Base64.decode(byteStr, Base64.DEFAULT);
+    public void sendDataToSocket(String host, int port, String byteStr, Callback callback) {
         try{
             Runnable runnable = () -> {
-                String response = createSocketConnection(host,port, byteArr);
+                String response = createSocketConnection(host,port, byteStr);
                 if (response.equals(SUCCESS)) {
                     callback.invoke(null, response);
                 } else {
@@ -41,25 +42,25 @@ public class TcpSocketModule extends ReactContextBaseJavaModule {
             Thread thread = new Thread(runnable);
             thread.start();
         }catch (Exception e){
-            Log.d("Socket module", "socketBytes error" + e.getMessage());
+            Log.d(TAG, "socketBytes error" + e.getMessage());
             callback.invoke(e.toString(), null);
         }
     }
 
-    @ReactMethod
-    private String createSocketConnection(String host, int port, byte[] bytes) {
+    private String createSocketConnection(String host, int port, String data) {
         String returnValue = "";
         try {
-            Log.i("socketModule", " sending data to " + host + " " + port);
+            Log.i(TAG, " sending data to " + host + " " + port);
             Socket socket = new Socket(host, port);
             OutputStream output = socket.getOutputStream();
+            byte[] bytes = data.getBytes();
             output.write(bytes);
             socket.close();
             returnValue = SUCCESS;
             return returnValue;
         } catch (Exception e) {
             try {
-                Log.e("socketModule", "Error " + e.getMessage());
+                Log.e(TAG, "Error " + e.getMessage());
                 returnValue = e.getMessage();
                 Thread.sleep(1000);
             } catch (InterruptedException e1) {
