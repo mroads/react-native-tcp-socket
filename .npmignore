@@ -11,5 +11,5 @@ build/Release
 node_modules
 res
 example
-android
+# android
 ios
