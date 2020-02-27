@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
+import {View, Text, StyleSheet, TextInput} from 'react-native';
 import SocketModuleWrapper from './SocketModuleWrapper';
+import ButtonWrapper from 'react-native-button-wrapper';
 
 const styles = StyleSheet.create({
   container: {
@@ -10,12 +11,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'column',
   },
+  textInputContainer: { flexDirection: 'column', margin: 10 },
+  textInput: { height: 50, width: 300, borderColor: 'gray', borderWidth: 1, borderRadius: 5 },
+  dataContainer: { height: 80, width: 300, borderColor: 'gray', borderWidth: 1, borderRadius: 5 },
+  button: {height: 45, width: 140, backgroundColor: '#AD0028', borderRadius: 10, marginTop: 20},
+  text: { fontSize: 30, color: '#FFF', fontWeight: '700', textAlign: 'center', flex: 1 },
+  labelText: {fontSize: 30, color: '#000', fontWeight: '700', textAlign: 'center', marginBottom: 10},
 });
 
 class MainApp extends React.Component {
     state = {
         hostname: '',
-        port: 0,
+        port: '',
         data: '',
     }
 
@@ -39,35 +46,36 @@ class MainApp extends React.Component {
       const { hostname, port, data } = this.state;
     return (
         <View style={styles.container}>
-            <View style={{ flexDirection: 'column', margin: 20 }}>
-                <Text>IP Address: </Text>
+            <View style={styles.textInputContainer}>
+                <Text style={styles.labelText}>Enter IP Address: </Text>
                 <TextInput
-                    style={{ height: 40, width: 300, borderColor: 'gray', borderWidth: 1 }}
+                    style={styles.textInput}
                     onChangeText={text => this.onChangeText(text, 'hostname')}
                     value={hostname}
                 />
             </View>
-            <View style={{ flexDirection: 'column', margin: 20 }}>
-                <Text>Port: </Text>
+            <View style={styles.textInputContainer}>
+                <Text style={styles.labelText}>Enter port: </Text>
                 <TextInput
-                    style={{ height: 40, width: 300, borderColor: 'gray', borderWidth: 1 }}
+                    style={styles.textInput}
                     onChangeText={text => this.onChangeText(text, 'port')}
                     value={port}
                 />
             </View>
-            <View style={{ flexDirection: 'column', margin: 20 }}>
-                <Text>Data: </Text>
+            <View style={styles.textInputContainer}>
+                <Text style={styles.labelText}> Enter data: </Text>
                 <TextInput
-                    style={{ height: 80, width: 300, borderColor: 'gray', borderWidth: 1 }}
+                    style={styles.dataContainer}
                     onChangeText={text => this.onChangeText(text, 'data')}
                     value={data}
                 />
             </View>
-            <Button
-            title="Done"
-          style={{height: 80, width: 250, backgroundColor: '#AD0028'}}
-          onPress={() => this.donePressed()}
-        />
+        <ButtonWrapper
+        style={styles.button}
+        onPress={() => this.donePressed()}
+        >
+            <Text style={styles.text}>DONE</Text>
+        </ButtonWrapper>
         </View>
     );
   }
