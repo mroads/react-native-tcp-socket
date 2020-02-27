@@ -1,5 +1,7 @@
 # React Native Socket Module
 
+![](socket.gif)
+
 Currently browsers does not support connecting to TCP Socket using Javascript.
 **React Native Socket Module** is a light weight library that provides feasibility to establish a connection with the socket and allows communication to the application using javascript running on a browser. This is an independent package.
 
