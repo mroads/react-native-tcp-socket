@@ -30,6 +30,10 @@ class MainApp extends React.Component {
         this.setState({ [type] : text});
     }
 
+    setData = (data) => {
+        this.setState({connection: data});
+    }
+
     donePressed = () => {
         const { hostname, port, data } = this.state;
         SocketModuleWrapper.socketConnection({
@@ -37,15 +41,28 @@ class MainApp extends React.Component {
             printerPort: port,
             data,
         },
-        () => console.log("Successful"),
-        () => console.log("Failure"),
+        () => {
+            console.log("Successful");
+            this.setData('success');
+        },
+        () => {
+            console.log("Failure");
+            this.setData('failure');
+        }
         );
     }
 
   render() {
-      const { hostname, port, data } = this.state;
+      const { hostname, port, data, connection } = this.state;
     return (
         <View style={styles.container}>
+            {connection ?  (
+                <View>
+                    {connection === 'success' ? (<Text style={[styles.labelText, {color: 'green'}]}>Connection Successful</Text>)
+                    : (<Text style={[styles.labelText, {color: 'red'}]}>Connection Failed</Text>)}           
+                    </View>
+            ) : null }
+
             <View style={styles.textInputContainer}>
                 <Text style={styles.labelText}>Enter IP Address: </Text>
                 <TextInput
