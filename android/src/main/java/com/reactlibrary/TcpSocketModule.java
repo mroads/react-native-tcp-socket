@@ -53,7 +53,7 @@ public class TcpSocketModule extends ReactContextBaseJavaModule {
             Log.i(TAG, " sending data to " + host + " " + port);
             Socket socket = new Socket(host, port);
             OutputStream output = socket.getOutputStream();
-            byte[] bytes = data.getBytes();
+            byte[] bytes = android.util.Base64.decode(data, Base64.DEFAULT);
             output.write(bytes);
             socket.close();
             returnValue = SUCCESS;
