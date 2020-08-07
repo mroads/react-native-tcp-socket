@@ -7,10 +7,10 @@
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(sendDataToSocket:(NSString *)url port:(NSString *)port bytes:(NSString *)data callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(sendDataToSocket:(NSString *)url port:(NSNumber *)port bytes:(NSString *)data callback:(RCTResponseSenderBlock)callback)
 {
   RCTLogInfo(@"url: %@ port: %@ bytes: %@", url, port, data);
-  int sockfd = tcpconnect_start_client([url UTF8String], [port UTF8String]);
+  int sockfd = tcpconnect_start_client([url UTF8String], [[port stringValue] UTF8String]);
   RCTLogInfo(@"sockfd: %d ", sockfd);
   NSData *bytes = [data dataUsingEncoding:NSUTF8StringEncoding];
   
@@ -24,7 +24,7 @@ RCT_EXPORT_METHOD(sendDataToSocket:(NSString *)url port:(NSString *)port bytes:(
 
   const char *buf = bytes.bytes;
   
-  int chunkSize = 20;
+  int chunkSize = 512 * 1024;
 
   while (length) {
     // Be prepared to non-blocking sockets
