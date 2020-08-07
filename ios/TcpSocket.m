@@ -7,7 +7,7 @@
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(sendDataToSocket:(NSString *)url port:(NSNumber *)port bytes:(NSString *)data callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(sendDataToSocket:(NSString *)url port:(nonnull NSNumber *)port bytes:(NSString *)data callback:(RCTResponseSenderBlock)callback)
 {
   RCTLogInfo(@"url: %@ port: %@ bytes: %@", url, port, data);
   int sockfd = tcpconnect_start_client([url UTF8String], [[port stringValue] UTF8String]);
