@@ -40,3 +40,5 @@ local.properties
 buck-out/
 \.buckd/
 *.keystore
+ios/PannaLiveReactNative.production 2020-08-07 23-19-13/DistributionSummary.plist
+ios/PannaLiveReactNative.production 2020-08-07 23-19-13/ExportOptions.plist

@@ -7,13 +7,20 @@
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(sendDataToSocket:(NSString *)url port:(nonnull NSNumber *)port bytes:(NSString *)data callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(sendDataToSocket:(NSString *)url port:(nonnull NSNumber *)port bytes:(NSString *)base64Encoded callback:(RCTResponseSenderBlock)callback)
 {
-  RCTLogInfo(@"url: %@ port: %@ bytes: %@", url, port, data);
+  RCTLogInfo(@"url: %@ port: %@ bytes: %@", url, port, base64Encoded);
   int sockfd = tcpconnect_start_client([url UTF8String], [[port stringValue] UTF8String]);
-  RCTLogInfo(@"sockfd: %d ", sockfd);
-  NSData *bytes = [data dataUsingEncoding:NSUTF8StringEncoding];
-  
+  RCTLogInfo(@"sockfd111: %d ", sockfd);
+  // NSData *bytes = [data dataUsingEncoding:NSUTF8StringEncoding];
+  NSData *nsdataFromBase64String = [[NSData alloc]
+  initWithBase64EncodedString:base64Encoded options:0];
+ 
+  // Decoded NSString from the NSData
+  NSString *base64Decoded = [[NSString alloc] 
+    initWithData:nsdataFromBase64String encoding:NSUTF8StringEncoding];
+  NSData *bytes = [base64Decoded dataUsingEncoding:NSUTF8StringEncoding];
+    
   if(sockfd<0){
     callback(@[@"error connecting to socket"]);
     return;
