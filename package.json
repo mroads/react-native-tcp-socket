@@ -1,7 +1,7 @@
 {
   "name": "react-native-tcp-socket-mroads",
   "title": "React Native Tcp Socket",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "TODO",
   "main": "index.js",
   "scripts": {
